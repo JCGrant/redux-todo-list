@@ -7,50 +7,26 @@ interface TodoData {
 }
 
 interface TodoProps extends TodoData {}
-class Todo extends React.Component<TodoProps> {
-  constructor(props: TodoProps) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <li>{this.props.text}</li>
-    );
-  }
-}
+const Todo = ({text}: TodoProps) => (
+  <li>{text}</li>
+);
 
 interface TodoListProps {
   todos: TodoData[];
 }
-class TodoList extends React.Component<TodoListProps> {
-  constructor(props: TodoListProps) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <ul>
-        {this.props.todos.map((todo) => <Todo key={todo.id} {...todo} />)}
-      </ul>
-    );
-  }
-}
+const TodoList = ({todos}: TodoListProps) => (
+  <ul>
+    {todos.map((todo) => <Todo key={todo.id} {...todo} />)}
+  </ul>
+);
 
 interface AppProps {
   todos: TodoData[];
 }
-class App extends React.Component<AppProps> {
-  constructor(props: AppProps) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <TodoList todos={this.props.todos} />
-      </div>
-    );
-  }
-}
+const App = ({todos}: AppProps) => (
+  <div>
+    <TodoList todos={todos} />
+  </div>
+);
 
 export default App;
