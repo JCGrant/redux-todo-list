@@ -18,7 +18,7 @@ const initialState = [
   {
     id: 2,
     text: 'buy flowers for girlfriend',
-    done: false,
+    done: true,
   },
 ];
 

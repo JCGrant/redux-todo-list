@@ -7,8 +7,8 @@ interface TodoData {
 }
 
 interface TodoProps extends TodoData {}
-const Todo = ({text}: TodoProps) => (
-  <li>{text}</li>
+const Todo = ({text, done}: TodoProps) => (
+  <li style={{textDecoration: done ? 'line-through' : 'none'}}>{text}</li>
 );
 
 interface TodoListProps {
