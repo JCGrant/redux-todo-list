@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-interface Todo {
+interface TodoData {
   id: number;
   text: string;
   done: boolean;
 }
 
-interface TodoProps extends Todo {}
-class TodoContainer extends React.Component<TodoProps> {
+interface TodoProps extends TodoData {}
+class Todo extends React.Component<TodoProps> {
   constructor(props: TodoProps) {
     super(props);
   }
@@ -20,7 +20,7 @@ class TodoContainer extends React.Component<TodoProps> {
 }
 
 interface TodoListProps {
-  todos: Todo[];
+  todos: TodoData[];
 }
 class TodoList extends React.Component<TodoListProps> {
   constructor(props: TodoListProps) {
@@ -30,14 +30,14 @@ class TodoList extends React.Component<TodoListProps> {
   render() {
     return (
       <ul>
-        {this.props.todos.map((todo) => <TodoContainer key={todo.id} {...todo} />)}
+        {this.props.todos.map((todo) => <Todo key={todo.id} {...todo} />)}
       </ul>
     );
   }
 }
 
 interface AppProps {
-  todos: Todo[];
+  todos: TodoData[];
 }
 class App extends React.Component<AppProps> {
   constructor(props: AppProps) {
