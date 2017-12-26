@@ -19,6 +19,23 @@ class TodoContainer extends React.Component<TodoProps> {
   }
 }
 
+interface TodoListProps {
+  todos: Todo[];
+}
+class TodoList extends React.Component<TodoListProps> {
+  constructor(props: TodoListProps) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <ul>
+        {this.props.todos.map((todo) => <TodoContainer key={todo.id} {...todo} />)}
+      </ul>
+    );
+  }
+}
+
 interface AppProps {
   todos: Todo[];
 }
@@ -30,9 +47,7 @@ class App extends React.Component<AppProps> {
   render() {
     return (
       <div>
-        <ul>
-          {this.props.todos.map((todo) => <TodoContainer key={todo.id} {...todo} />)}
-        </ul>
+        <TodoList todos={this.props.todos} />
       </div>
     );
   }
