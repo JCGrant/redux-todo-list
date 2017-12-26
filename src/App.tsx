@@ -1,29 +1,24 @@
 import * as React from 'react';
 
-const initialState = [
-  {
-    id: 0,
-    text: 'wash dishes',
-    done: false,
-  },
-  {
-    id: 1,
-    text: 'write down thoughts',
-    done: false,
-  },
-  {
-    id: 2,
-    text: 'buy flowers for girlfriend',
-    done: false,
-  },
-];
+interface Todo {
+  id: number;
+  text: string;
+  done: boolean;
+}
 
-class App extends React.Component {
+interface AppProps {
+  todos: Todo[];
+}
+class App extends React.Component<AppProps> {
+  constructor(props: AppProps) {
+    super(props);
+  }
+
   render() {
     return (
       <div>
         <ul>
-          {initialState.map((todo) => <li key={todo.id}>{todo.text}</li>)}
+          {this.props.todos.map((todo) => <li key={todo.id}>{todo.text}</li>)}
         </ul>
       </div>
     );
