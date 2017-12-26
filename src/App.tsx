@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface TodoData {
+export interface TodoData {
   id: number;
   text: string;
   done: boolean;
