@@ -6,6 +6,19 @@ interface Todo {
   done: boolean;
 }
 
+interface TodoProps extends Todo {}
+class TodoContainer extends React.Component<TodoProps> {
+  constructor(props: TodoProps) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <li>{this.props.text}</li>
+    );
+  }
+}
+
 interface AppProps {
   todos: Todo[];
 }
@@ -18,7 +31,7 @@ class App extends React.Component<AppProps> {
     return (
       <div>
         <ul>
-          {this.props.todos.map((todo) => <li key={todo.id}>{todo.text}</li>)}
+          {this.props.todos.map((todo) => <TodoContainer key={todo.id} {...todo} />)}
         </ul>
       </div>
     );
