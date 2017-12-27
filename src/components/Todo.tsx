@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { todoActions, TodoState } from '../reducers';
+import { TodoState } from '../reducers';
+import { todoActions } from '../actions';
 
 interface OwnProps extends TodoState {}
 interface DispatchProps {

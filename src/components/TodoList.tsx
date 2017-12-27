@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { AppState, TodoState, todoActions } from '../reducers';
+import { AppState, TodoState } from '../reducers';
+import { todoActions } from '../actions';
 import Todo from './Todo';
 
 type StateProps = {
