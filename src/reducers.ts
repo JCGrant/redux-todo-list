@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { TodoData } from './App';
 
 enum ActionType {
   ADD_TODO = 'ADD_TODO',
@@ -57,7 +56,11 @@ type Action =
   | DeleteTodo
   ;
 
-interface TodoState extends TodoData {}
+export interface TodoState {
+  id: number;
+  text: string;
+  done: boolean;
+}
 
 const newTodoId = (state: TodoState[]): number =>
   state.length > 0 ? state[state.length - 1].id + 1 : 0;
