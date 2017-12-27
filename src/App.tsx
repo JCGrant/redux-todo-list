@@ -30,13 +30,13 @@ const Todo = connect(null, mapDispatchToTodoProps)(
   )
 );
 
-interface TodoListOwnProps {
+type TodoListStateProps = {
   todos: TodoData[];
-}
+};
 
-type TodoListStateProps = TodoListOwnProps;
-
-const mapStateToTodoListProps = (state: AppState, ownProps: TodoListOwnProps): TodoListStateProps => ownProps;
+const mapStateToTodoListProps = (state: AppState): TodoListStateProps => ({
+  todos: state.todos,
+});
 
 type TodoListProps = TodoListStateProps;
 const TodoList = connect(mapStateToTodoListProps)(
@@ -47,16 +47,10 @@ const TodoList = connect(mapStateToTodoListProps)(
   )
 );
 
-interface AppStateProps {
-  todos: TodoData[];
-}
-const mapStateToAppProps = (state: AppState): AppStateProps => state;
-
-type AppProps = AppStateProps;
-const App = ({todos}: AppProps) => (
+const App = () => (
   <div>
-    <TodoList todos={todos} />
+    <TodoList />
   </div>
 );
 
-export default connect(mapStateToAppProps)(App);
+export default connect()(App);
