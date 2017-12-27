@@ -30,7 +30,7 @@ const store = configureStore(initialState);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App todos={initialState.todos}/>
+    <App />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

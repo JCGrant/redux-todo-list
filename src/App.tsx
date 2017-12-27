@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { AppState } from './reducers';
 
 export interface TodoData {
   id: number;
@@ -20,13 +22,16 @@ const TodoList = ({todos}: TodoListProps) => (
   </ul>
 );
 
-interface AppProps {
+interface AppStateProps {
   todos: TodoData[];
 }
+const mapStateToProps = (state: AppState): AppStateProps => state;
+
+type AppProps = AppStateProps;
 const App = ({todos}: AppProps) => (
   <div>
     <TodoList todos={todos} />
   </div>
 );
 
-export default App;
+export default connect(mapStateToProps)(App);
