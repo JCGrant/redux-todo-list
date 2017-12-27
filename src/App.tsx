@@ -9,45 +9,54 @@ export interface TodoData {
   done: boolean;
 }
 
-interface TodoProps extends TodoData {
+interface TodoOwnProps extends TodoData {}
+
+interface TodoDispatchProps {
   toggle: () => void;
 }
-const Todo = ({text, done, toggle}: TodoProps) => (
-  <li
-    style={{textDecoration: done ? 'line-through' : 'none'}}
-    onClick={toggle}
-  >
-    {text}
-  </li>
+const mapDispatchToTodoProps = (dispatch: Dispatch<{}>, {id}: TodoOwnProps): TodoDispatchProps => ({
+  toggle: () => dispatch(todoActions.toggleTodo(id)),
+});
+
+type TodoProps = TodoData & TodoDispatchProps;
+const Todo = connect(null, mapDispatchToTodoProps)(
+  ({text, done, toggle}: TodoProps) => (
+    <li
+      style={{textDecoration: done ? 'line-through' : 'none'}}
+      onClick={toggle}
+    >
+      {text}
+    </li>
+  )
 );
 
-interface TodoListProps {
+interface TodoListOwnProps {
   todos: TodoData[];
-  toggleTodo: (id: number) => () => void;
 }
-const TodoList = ({todos, toggleTodo}: TodoListProps) => (
-  <ul>
-    {todos.map((todo) => <Todo key={todo.id} {...todo} toggle={toggleTodo(todo.id)} />)}
-  </ul>
+
+type TodoListStateProps = TodoListOwnProps;
+
+const mapStateToTodoListProps = (state: AppState, ownProps: TodoListOwnProps): TodoListStateProps => ownProps;
+
+type TodoListProps = TodoListStateProps;
+const TodoList = connect(mapStateToTodoListProps)(
+  ({todos}: TodoListProps) => (
+    <ul>
+      {todos.map((todo) => <Todo key={todo.id} {...todo} />)}
+    </ul>
+  )
 );
 
 interface AppStateProps {
   todos: TodoData[];
 }
-const mapStateToProps = (state: AppState): AppStateProps => state;
+const mapStateToAppProps = (state: AppState): AppStateProps => state;
 
-interface AppDispatchProps {
-  toggleTodo: (id: number) => () => void;
-}
-const mapDispatchToProps = (dispatch: Dispatch<{}>): AppDispatchProps => ({
- toggleTodo: (id: number) => () => dispatch(todoActions.toggleTodo(id)),
-});
-
-type AppProps = AppStateProps & AppDispatchProps;
-const App = ({todos, toggleTodo}: AppProps) => (
+type AppProps = AppStateProps;
+const App = ({todos}: AppProps) => (
   <div>
-    <TodoList todos={todos} toggleTodo={toggleTodo} />
+    <TodoList todos={todos} />
   </div>
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToAppProps)(App);
