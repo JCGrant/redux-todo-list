@@ -6,27 +6,7 @@ import configureStore from './store';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-const initialState = {
-  todos: [
-    {
-      id: 0,
-      text: 'wash dishes',
-      done: false,
-    },
-    {
-      id: 1,
-      text: 'write down thoughts',
-      done: false,
-    },
-    {
-      id: 2,
-      text: 'buy flowers for girlfriend',
-      done: true,
-    },
-  ]
-};
-
-const store = configureStore(initialState);
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
