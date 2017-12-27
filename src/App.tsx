@@ -21,12 +21,12 @@ const mapDispatchToTodoProps = (dispatch: Dispatch<{}>, {id}: TodoOwnProps): Tod
 type TodoProps = TodoData & TodoDispatchProps;
 const Todo = connect(null, mapDispatchToTodoProps)(
   ({text, done, toggle}: TodoProps) => (
-    <li
+    <span
       style={{textDecoration: done ? 'line-through' : 'none'}}
       onClick={toggle}
     >
       {text}
-    </li>
+    </span>
   )
 );
 
@@ -38,13 +38,28 @@ const mapStateToTodoListProps = (state: AppState): TodoListStateProps => ({
   todos: state.todos,
 });
 
-type TodoListProps = TodoListStateProps;
-const TodoList = connect(mapStateToTodoListProps)(
-  ({todos}: TodoListProps) => (
-    <ul>
-      {todos.map((todo) => <Todo key={todo.id} {...todo} />)}
-    </ul>
-  )
+type TodoListDispatchProps = {
+  deleteTodo: (id: number) => void;
+};
+
+const mapDispatchToTodoListProps = (dispatch: Dispatch<{}>): TodoListDispatchProps => ({
+  deleteTodo: (id: number) => dispatch(todoActions.deleteTodo(id)),
+});
+
+type TodoListProps = TodoListStateProps & TodoListDispatchProps;
+const TodoList = connect(mapStateToTodoListProps, mapDispatchToTodoListProps)(
+  ({todos, deleteTodo}: TodoListProps) => {
+    return (
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <Todo {...todo} />
+            <button onClick={() => deleteTodo(todo.id)}>x</button>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 );
 
 interface AppDispatchProps {

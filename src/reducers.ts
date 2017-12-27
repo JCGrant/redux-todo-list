@@ -4,6 +4,7 @@ import { TodoData } from './App';
 enum ActionType {
   ADD_TODO = 'ADD_TODO',
   TOGGLE_TODO = 'TOGGLE_TODO',
+  DELETE_TODO = 'DELETE_TODO',
 }
 
 interface AddTodo {
@@ -15,6 +16,13 @@ interface AddTodo {
 
 interface ToggleTodo {
   type: ActionType.TOGGLE_TODO;
+  payload: {
+    id: number;
+  };
+}
+
+interface DeleteTodo {
+  type: ActionType.DELETE_TODO;
   payload: {
     id: number;
   };
@@ -34,11 +42,19 @@ export const todoActions = {
       id,
     },
   }),
+
+  deleteTodo: (id: number): DeleteTodo => ({
+    type: ActionType.DELETE_TODO,
+    payload: {
+      id,
+    },
+  }),
 };
 
 type Action =
   | AddTodo
   | ToggleTodo
+  | DeleteTodo
   ;
 
 interface TodoState extends TodoData {}
@@ -63,6 +79,10 @@ const todos = (state: TodoState[] = [], action: Action): TodoState[] => {
         ...todo,
         done: !todo.done,
       });
+
+      case ActionType.DELETE_TODO:
+        return state.filter((todo) => todo.id !== action.payload.id);
+
     default:
       return state;
   }
