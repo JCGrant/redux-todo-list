@@ -57,19 +57,25 @@ const mapDispatchToAppProps = (dispatch: Dispatch<{}>): AppDispatchProps => ({
 
 type AppProps = AppDispatchProps;
 
-const App = ({addTodo}: AppProps) => {
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      addTodo('new todo');
-    }
-  };
+class App extends React.Component<AppProps> {
+  constructor(props: AppProps) {
+    super(props);
+  }
 
-  return (
-    <div>
-      <input onKeyDown={onKeyDown}/>
-      <TodoList />
-    </div>
-  );
-};
+  onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      this.props.addTodo('new todo');
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <input onKeyDown={this.onKeyDown} />
+        <TodoList />
+      </div>
+    );
+  }
+}
 
 export default connect(null, mapDispatchToAppProps)(App);
