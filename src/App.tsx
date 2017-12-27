@@ -47,10 +47,29 @@ const TodoList = connect(mapStateToTodoListProps)(
   )
 );
 
-const App = () => (
-  <div>
-    <TodoList />
-  </div>
-);
+interface AppDispatchProps {
+  addTodo: (text: string) => void;
+}
 
-export default connect()(App);
+const mapDispatchToAppProps = (dispatch: Dispatch<{}>): AppDispatchProps => ({
+  addTodo: (text: string) => dispatch(todoActions.addTodo(text)),
+});
+
+type AppProps = AppDispatchProps;
+
+const App = ({addTodo}: AppProps) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTodo('new todo');
+    }
+  };
+
+  return (
+    <div>
+      <input onKeyDown={onKeyDown}/>
+      <TodoList />
+    </div>
+  );
+};
+
+export default connect(null, mapDispatchToAppProps)(App);
