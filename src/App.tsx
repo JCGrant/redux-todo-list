@@ -57,21 +57,38 @@ const mapDispatchToAppProps = (dispatch: Dispatch<{}>): AppDispatchProps => ({
 
 type AppProps = AppDispatchProps;
 
-class App extends React.Component<AppProps> {
+interface AppLocalState {
+  inputValue: string;
+}
+
+class App extends React.Component<AppProps, AppLocalState> {
   constructor(props: AppProps) {
     super(props);
+    this.state = {
+      inputValue: '',
+    };
+  }
+
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    this.setState((state) => ({
+      inputValue,
+    }));
   }
 
   onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      this.props.addTodo('new todo');
+      this.props.addTodo(this.state.inputValue);
+      this.setState((state) => ({
+        inputValue: '',
+      }));
     }
   }
 
   render() {
     return (
       <div>
-        <input onKeyDown={this.onKeyDown} />
+        <input value={this.state.inputValue} onChange={this.onChange} onKeyDown={this.onKeyDown} />
         <TodoList />
       </div>
     );
